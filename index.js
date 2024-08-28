@@ -9,6 +9,8 @@ program
     .description("lets you add todo list through terminal :D")
     .version("0.0.1");
 
+
+
 program.command('add')
     .description('lets you add a task')
     .argument('<task>', 'adds a task')
@@ -78,5 +80,47 @@ program
             });
         });
     });
+
+
+program
+    .command('list')
+    .description('lists all the tasks')
+    .action(()=>{
+
+        fs.readFile(file,'utf8',(err,data)=>{
+
+            if(err){
+                console.log("error reading file: ", err)
+            }
+
+
+            let main_data = JSON.parse(data);
+            let todos = [...main_data]
+
+            if(todos.length>0){
+
+
+                console.log("task_id" + " | " + "task_name")
+                for(let i = 0; i<todos.length; i++){
+
+                console.log( `${todos[i].id} | ${todos[i].taskName}`)
+
+                }
+            }else{
+
+                console.log("add some tasks to the list bro :D")
+
+            }
+
+            
+
+            
+        })
+
+
+    })
+
+
+
 
 program.parse();
